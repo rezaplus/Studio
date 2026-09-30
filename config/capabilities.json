@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "resolutionOrder": [
+    "script",
+    "pipeline",
+    "profile",
+    "agent-reasoning",
+    "provider"
+  ],
+  "capabilities": [
+    {
+      "id": "dubbing-queue",
+      "keywords": [
+        "bulk dub",
+        "dubbing queue",
+        "dub all",
+        "دوبله گروهی",
+        "صف دوبله",
+        "دوبله همه"
+      ],
+      "pipeline": "localization",
+      "entryScript": "scripts/dub_queue.py",
+      "requiredInputs": [
+        "PROJECT:RELEASE:LANG items",
+        "paid Proofread confirmation",
+        "paid render confirmation per item"
+      ],
+      "paid": true
+    },
+    {
+      "id": "bulk-subtitles",
+      "keywords": [
+        "bulk subtitle",
+        "all subtitles",
+        "subtitles for all",
+        "word by word",
+        "زیرنویس همه",
+        "زیرنویس گروهی",
+        "کلمه به کلمه"
+      ],
+      "pipeline": "subtitles",
+      "entryScript": "scripts/content/subtitle_content.py",
+      "requiredInputs": [
+        "content with source/video (or --all-missing)"
+      ],
+      "paid": false
+    },
+    {
+      "id": "ingest-video",
+      "keywords": [
+        "ingest",
+        "new video",
+        "dropped video",
+        "input videos",
+        "videos in input",
+        "auto folder",
+        "ویدیو جدید",
+        "ویدیو گذاشتم",
+        "پوشه خودکار",
+        "ورودی ویدیو"
+      ],
+      "pipeline": "assembly",
+      "entryScript": "scripts/content/ingest.py",
+      "requiredInputs": [
+        "video file(s) in input/videos"
+      ],
+      "paid": false
+    },
+    {
+      "id": "import-video-for-editing",
+      "keywords": [
+        "import video",
+        "edit video",
+        "start editing",
+        "input video",
+        "ادیت ویدیو",
+        "شروع ادیت",
+        "ویدیو ورودی"
+      ],
+      "pipeline": "assembly",
+      "entryScript": "scripts/content/import_video.py",
+      "requiredInputs": [
+        "content id",
+        "staged video in input/videos"
+      ],
+      "paid": false
+    },
+    {
+      "id": "create-content",
+      "keywords": [
+        "create content",
+        "new content",
+        "make reel",
+        "create reel",
+        "محتوا",
+        "ریل",
+        "ویدیو بساز"
+      ],
+      "pipeline": "reel-main",
+      "entryScript": "scripts/content/new_content.py",
+      "requiredInputs": [
+        "name",
+        "brand",
+        "topic",
+        "locales"
+      ],
+      "paid": false
+    },
+    {
+      "id": "generate-video",
+      "keywords": [
+        "generate video",
+        "make video",
+        "video generation",
+        "تولید ویدیو",
+        "ویدیو تولید"
+      ],
+      "pipeline": "video-generation",
+      "entryScript": "scripts/estimate_project.py",
+      "requiredInputs": [
+        "approved storyboard",
+        "model",
+        "duration",
+        "resolution",
+        "audio setting"
+      ],
+      "paid": true
+    },
+    {
+      "id": "localize-video",
+      "keywords": [
+        "translate video",
+        "dub",
+        "localize",
+        "ترجمه ویدیو",
+        "دوبله",
+        "زیرنویس ترجمه"
+      ],
+      "pipeline": "localization",
+      "entryScript": "scripts/content/pipeline.py",
+      "requiredInputs": [
+        "source release",
+        "target locales",
+        "speaker plan"
+      ],
+      "paid": true
+    },
+    {
+      "id": "create-subtitles",
+      "keywords": [
+        "subtitle",
+        "caption video",
+        "زیرنویس",
+        "ساب تایتل"
+      ],
+      "pipeline": "subtitles",
+      "entryScript": "scripts/build_spoken_subtitles.py",
+      "requiredInputs": [
+        "source release",
+        "language"
+      ],
+      "paid": false
+    },
+    {
+      "id": "stage-studio-draft",
+      "keywords": [
+        "studio draft",
+        "show draft",
+        "register draft",
+        "پیش نویس استودیو",
+        "نمایش پیش نویس"
+      ],
+      "pipeline": "release",
+      "entryScript": "scripts/publish_to_studio.py",
+      "requiredInputs": [
+        "content id",
+        "local video",
+        "language"
+      ],
+      "paid": false
+    },
+    {
+      "id": "promote-studio-delivery",
+      "keywords": [
+        "promote draft",
+        "change studio status",
+        "approve studio delivery",
+        "تغییر وضعیت استودیو",
+        "تایید خروجی استودیو"
+      ],
+      "pipeline": "release",
+      "entryScript": "scripts/update_studio_status.py",
+      "requiredInputs": [
+        "content id",
+        "delivery id",
+        "status"
+      ],
+      "paid": false
+    },
+    {
+      "id": "review-content",
+      "keywords": [
+        "review",
+        "validate",
+        "check content",
+        "بررسی",
+        "اعتبارسنجی"
+      ],
+      "pipeline": "reel-main",
+      "entryScript": "scripts/content/validate_content.py",
+      "requiredInputs": [
+        "content id"
+      ],
+      "paid": false
+    },
+    {
+      "id": "provider-mcp",
+      "keywords": [
+        "mcp",
+        "connect heygen",
+        "connect higgsfield",
+        "mcp status",
+        "اتصال mcp",
+        "ام سی پی"
+      ],
+      "pipeline": "video-generation",
+      "entryScript": "ChatGPT agent MCP connection",
+      "requiredInputs": [
+        "HeyGen MCP connected in the ChatGPT agent"
+      ],
+      "paid": true
+    }
+  ]
+}

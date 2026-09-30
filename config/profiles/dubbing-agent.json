@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "dubbing-agent",
+  "name": "Multilingual Dubbing Agent",
+  "kind": "localization",
+  "allowedLocales": [
+    "en",
+    "fa",
+    "tr",
+    "ar"
+  ],
+  "requiresHumanApproval": [
+    "proofread",
+    "paid-render",
+    "final-audio-review"
+  ],
+  "providers": {
+    "heygen": {
+      "modeEnv": "HEYGEN_MODE",
+      "api": "scripts/ with keys from .env",
+      "mcp": "mcp__heygen tools (sign in via /mcp)",
+      "rule": "Read the mode from the router output. Use only the selected transport; never fall back to the other one without the user's approval."
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "reel-generator",
+  "name": "Reel Generator",
+  "kind": "content-generator",
+  "allowedFormats": [
+    "instagram-reel"
+  ],
+  "defaultAspectRatio": "9:16",
+  "requiredContentFields": [
+    "id",
+    "name",
+    "brand",
+    "topic",
+    "locales",
+    "generatorProfile",
+    "status"
+  ],
+  "providers": {
+    "higgsfield": {
+      "modeEnv": "HIGGSFIELD_MODE",
+      "api": "scripts/ with keys from .env",
+      "mcp": "mcp__higgsfield tools (sign in via /mcp)",
+      "rule": "Read the mode from the router output. Use only the selected transport; never fall back to the other one without the user's approval."
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "presenter": {
+    "id": "presenter",
+    "identitySource": null,
+    "avatarId": null,
+    "avatarStatus": "No persistent avatar created or verified",
+    "policy": "Preserve the presenter's visual identity. Never substitute a stock avatar or invent an avatar ID."
+  },
+  "languages": {
+    "en": {
+      "locale": "en",
+      "method": "original_video_audio",
+      "voiceId": null,
+      "voiceStatus": "Original audio",
+      "commentKeyword": "INFO"
+    },
+    "fa": {
+      "locale": "fa-IR",
+      "method": "heygen_precision_translation_source_voice_clone",
+      "voiceId": null
+    },
+    "tr": {
+      "locale": "tr-TR",
+      "method": "heygen_precision_translation_source_voice_clone",
+      "voiceId": null
+    },
+    "ar": {
+      "locale": "ar",
+      "method": "heygen_precision_translation_source_voice_clone",
+      "voiceId": null
+    }
+  },
+  "brandGlossaryId": null,
+  "reusePolicy": "Copy to config/presenter-voices.json (git-ignored) and fill in your own IDs. API keys must never appear here."
+}

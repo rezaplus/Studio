@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "video-generation",
+  "name": "Video Generation Pipeline",
+  "kind": "child",
+  "stages": [
+    {
+      "id": "shot-plan",
+      "type": "prompt",
+      "command": "scripts/content/pipeline.py plan <content-id>",
+      "prompt": "Run python3 scripts/content/pipeline.py plan content/<content-id> and python3 scripts/estimate_project.py content/<content-id> (no network). Report which shots are ready and what is missing.",
+      "gate": "none"
+    },
+    {
+      "id": "reference-prep",
+      "type": "prompt",
+      "requires": [
+        "approved-first-frame"
+      ],
+      "prompt": "Ask the user for one clean vertical still per generated shot (from ChatGPT). Upload each with scripts/upload_reference.py and record the HTTPS URL in the shot request. Never upload a collage.",
+      "gate": "none"
+    },
+    {
+      "id": "estimate",
+      "type": "prompt",
+      "command": "scripts/estimate_project.py <content-path> --estimate",
+      "prompt": "Run python3 scripts/list_video_models.py, then python3 scripts/estimate_project.py content/<content-id> --estimate. Present model, duration, resolution, 9:16, audio setting (estimate audio on and off if undecided), exact prompts, per-shot and total cost. Do not submit.",
+      "gate": "none"
+    },
+    {
+      "id": "generation-approval",
+      "type": "prompt",
+      "requires": [
+        "exact-estimate-approved"
+      ],
+      "prompt": "State the quoted configuration and total cost and wait. Do not generate until the user explicitly approves that exact quote.",
+      "gate": "approval"
+    },
+    {
+      "id": "generate-one-shot",
+      "type": "prompt",
+      "command": "scripts/generate_video.py --request <request> --wait",
+      "prompt": "PAID. Only after approval: run scripts/generate_video.py --request <request> --wait for the single approved shot. Record request ID and local path. On timeout or error, check scripts/request_status.py first; never resubmit blindly.",
+      "gate": "paid"
+    },
+    {
+      "id": "review-handoff",
+      "type": "prompt",
+      "requires": [
+        "accepted-terminal-frame"
+      ],
+      "prompt": "Extract the actual terminal frame of the accepted shot and use it as the next shot's first frame. If a shot is rejected, stop the chain and reapprove before continuing.",
+      "gate": "none"
+    }
+  ],
+  "mode": "agent-prompts"
+}

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "reel-main",
+  "name": "Reel Main Pipeline",
+  "kind": "orchestrator",
+  "stages": [
+    {"id": "intake", "type": "pipeline", "pipeline": "intake", "requires": ["content.json"]},
+    {"id": "prompt", "type": "pipeline", "pipeline": "prompt", "requires": ["intake-approved"]},
+    {"id": "storyboard", "type": "pipeline", "pipeline": "storyboard", "requires": ["prompt-approved"]},
+    {"id": "video", "type": "pipeline", "pipeline": "video-generation", "requires": ["storyboard-approved"]},
+    {"id": "assembly", "type": "pipeline", "pipeline": "assembly", "requires": ["video-approved"]},
+    {"id": "localization", "type": "pipeline", "pipeline": "localization", "requires": ["master-approved"]},
+    {"id": "subtitles", "type": "pipeline", "pipeline": "subtitles", "requires": ["localized-video-approved"]},
+    {"id": "release", "type": "pipeline", "pipeline": "release", "requires": ["subtitle-approved"]}
+  ]
+}

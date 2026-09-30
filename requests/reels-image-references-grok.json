@@ -1,0 +1,10 @@
+{
+  "prompt": "Create a polished vertical Instagram Reel. Use the first image as the opening frame and preserve the subject, product, and style shown in the reference images.",
+  "image_url": "REPLACE_WITH_FIRST_FRAME_PUBLIC_IMAGE_URL",
+  "image_urls": [
+    "REPLACE_WITH_REFERENCE_IMAGE_URL"
+  ],
+  "duration": 5,
+  "resolution": "720p",
+  "aspect_ratio": "9:16"
+}

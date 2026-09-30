@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "release",
+  "name": "Release Pipeline",
+  "kind": "child",
+  "stages": [
+    {
+      "id": "register-draft",
+      "type": "prompt",
+      "command": "scripts/publish_to_studio.py <content> <video> --status draft",
+      "requires": [
+        "reviewable-video"
+      ],
+      "prompt": "Register the reviewable video as an immutable draft with scripts/publish_to_studio.py <content> <video> --status draft. Follow studio/README.md.",
+      "gate": "none"
+    },
+    {
+      "id": "studio-draft-check",
+      "type": "prompt",
+      "requires": [
+        "registered-draft"
+      ],
+      "prompt": "Fetch http://localhost:8789/api/results and confirm the correct current draft/delivery shows, with a caption for finals. Do not claim visibility from the file alone.",
+      "gate": "none"
+    },
+    {
+      "id": "editorial-review",
+      "type": "prompt",
+      "requires": [
+        "studio-draft-visible"
+      ],
+      "prompt": "Ask the user to review the draft in Studio. Wait for their decision.",
+      "gate": "approval"
+    },
+    {
+      "id": "status-promotion",
+      "type": "prompt",
+      "command": "scripts/update_studio_status.py <content> <delivery-id> review|approved|archived",
+      "requires": [
+        "explicit-editorial-decision"
+      ],
+      "prompt": "Only on explicit editorial approval, run scripts/update_studio_status.py <content> <delivery-id> review|approved|archived. Never mark approved on your own.",
+      "gate": "approval"
+    }
+  ],
+  "mode": "agent-prompts"
+}

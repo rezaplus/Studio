@@ -1,0 +1,15 @@
+{
+  "title": "Reel — localized",
+  "output_languages": [
+    "Persian (Iran)",
+    "Turkish (Türkiye)",
+    "Arabic"
+  ],
+  "mode": "speed",
+  "brand_glossary_id": "d8ed79b67fcb4acfb61cc3807abba05a",
+  "speaker_num": 1,
+  "translate_audio_only": false,
+  "enable_dynamic_duration": true,
+  "disable_music_track": false,
+  "enable_speech_enhancement": false
+}

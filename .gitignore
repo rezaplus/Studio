@@ -1,0 +1,33 @@
+# Secrets: never commit. Copy .env.example to .env and fill it in (Studio > Settings can do this).
+.env
+.env.*
+!.env.example
+
+# Private and generated media
+content/*
+!content/.gitkeep
+input/videos/*
+!input/videos/README.md
+input/references/*
+!input/references/.gitkeep
+runtime/
+models/*
+!models/.gitkeep
+
+# Personal configuration (your brand, voices, locale defaults). Copy the shared templates instead.
+config/workspace.local.json
+config/presenter-voices.json
+config/brands/*
+!config/brands/default/
+
+# Tool and editor state
+.claude/settings.local.json
+.DS_Store
+node_modules/
+__pycache__/
+*.pyc
+*.part
+*.tmp
+*.log
+.vscode/
+.idea/

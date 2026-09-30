@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "storyboard",
+  "name": "Storyboard Pipeline",
+  "kind": "child",
+  "stages": [
+    {
+      "id": "keyframe-sheet",
+      "type": "prompt",
+      "output": "storyboard/storyboard-v001.png",
+      "prompt": "Write a ChatGPT image prompt for a six-panel storyboard sheet (order, person/wardrobe, location, lighting, framing) for this brief. Give it to the user, save the returned sheet as storyboard/storyboard-v001.png. It is for approval only; never use it as an API reference.",
+      "gate": "none"
+    },
+    {
+      "id": "shot-specs",
+      "type": "prompt",
+      "output": "shots/shot-01/spec.json",
+      "prompt": "Split the story into short shots. For each, write shots/shot-NN/spec.json: purpose, duration, first-frame intent, motion, camera, audio/post needs, and live_action / higgsfield / postproduction.",
+      "gate": "none"
+    },
+    {
+      "id": "storyboard-approval",
+      "type": "prompt",
+      "prompt": "Show the storyboard and shot list and wait. Mark completed only after the user's explicit yes.",
+      "gate": "approval"
+    }
+  ],
+  "mode": "agent-prompts"
+}

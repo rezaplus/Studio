@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "assembly",
+  "name": "Assembly Pipeline",
+  "kind": "child",
+  "stages": [
+    {
+      "id": "import-source-video",
+      "type": "prompt",
+      "command": "scripts/content/import_video.py --content <content> --video input/videos/<file>",
+      "prompt": "Run python3 scripts/content/ingest.py for new videos in input/videos, or scripts/content/import_video.py --content content/<content-id> --video input/videos/<file>. The video is moved, never copied.",
+      "gate": "none"
+    },
+    {
+      "id": "picture-lock",
+      "type": "prompt",
+      "prompt": "Lock the approved visual sequence. Use python3 scripts/build_reel.py content/<content-id> only when every final_path exists. Report continuity issues at each cut.",
+      "gate": "none"
+    },
+    {
+      "id": "audio-master",
+      "type": "prompt",
+      "requires": [
+        "intentional-audio"
+      ],
+      "prompt": "Build one master audio timeline: dialogue, one continuous music/ambience bed, timed sound effects, approved native audio mixed beneath. Keep dialogue, UI sounds and music under real recorded/licensed control.",
+      "gate": "none"
+    },
+    {
+      "id": "master-review",
+      "type": "prompt",
+      "prompt": "Ask the user to review the assembled Reel on a phone (9:16 framing, safe zones, softness, cuts, audio sync). Wait for their decision.",
+      "gate": "approval"
+    }
+  ],
+  "mode": "agent-prompts"
+}

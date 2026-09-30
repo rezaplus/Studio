@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "product": "Studio",
+  "defaultBrand": "default",
+  "favoriteBrands": [
+    "default"
+  ],
+  "activeLocales": [
+    "en"
+  ],
+  "contentRoot": "content",
+  "runtimeRoot": "runtime",
+  "dubbing": {
+    "languages": {
+      "fa": "Persian (Iran)",
+      "tr": "Turkish (Türkiye)",
+      "ar": "Arabic"
+    }
+  }
+}

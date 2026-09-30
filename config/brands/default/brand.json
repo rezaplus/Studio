@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "default",
+  "name": "My Brand",
+  "favorite": true,
+  "supportedLocales": [
+    "en"
+  ],
+  "defaultGeneratorProfile": "reel-generator",
+  "subtitlePreset": "creator"
+}

@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "id": "caption-agent",
+  "name": "Caption and Subtitle Agent",
+  "kind": "postproduction",
+  "allowedLocales": ["en", "fa", "tr", "ar"],
+  "output": ["caption.txt", "subtitles.srt"]
+}

@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "id": "localization",
+  "name": "Localization Pipeline",
+  "kind": "child",
+  "stages": [
+    {
+      "id": "locale-plan",
+      "type": "prompt",
+      "requires": [
+        "approved-master"
+      ],
+      "prompt": "Load config/presenter-voices.json if present, and the brand's config/brands/<brand>/POLICY.md. For each target locale write dubbing-plan.json: spoken beats, speaker count per beat, voice settings, brand pronunciation. Follow the brand policy for dialect and pronunciation. Do not call a provider.",
+      "gate": "none"
+    },
+    {
+      "id": "proofread",
+      "type": "prompt",
+      "requires": [
+        "proofread-cost-approved"
+      ],
+      "prompt": "PAID (HeyGen Precision Proofread). Show the plan and exact cost; ask for the first paid confirmation. Only then create per-beat proofread jobs with brand_glossary_id and save job records under the content.",
+      "gate": "paid"
+    },
+    {
+      "id": "target-srt-review",
+      "type": "prompt",
+      "requires": [
+        "provider-srt"
+      ],
+      "prompt": "Give the user the provider's reviewed target SRTs and check every brand-name occurrence. Wait for approval. Never replace provider text with Whisper output.",
+      "gate": "approval"
+    },
+    {
+      "id": "render",
+      "type": "prompt",
+      "requires": [
+        "render-cost-approved"
+      ],
+      "prompt": "PAID. Ask for the second paid confirmation with exact cost, then render the approved beats. Preserve plan and job records.",
+      "gate": "paid"
+    },
+    {
+      "id": "audio-lipsync-review",
+      "type": "prompt",
+      "requires": [
+        "rendered-localized-video"
+      ],
+      "prompt": "Have the user listen to brand pronunciation, accent (Arabic Khaliji/Emirati) and lip-sync in each final. Wait for their decision.",
+      "gate": "approval"
+    }
+  ],
+  "mode": "agent-prompts"
+}

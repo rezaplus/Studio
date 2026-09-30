@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "subtitles",
+  "name": "Subtitle Pipeline",
+  "kind": "child",
+  "stages": [
+    {
+      "id": "speech-timing",
+      "type": "prompt",
+      "command": "scripts/build_spoken_subtitles.py",
+      "prompt": "Create word-timed subtitles from approved speech (scripts/build_spoken_subtitles.py, or the provider's reviewed SRT for dubbed languages). Read skills/reel-subtitles/SKILL.md first.",
+      "gate": "none"
+    },
+    {
+      "id": "subtitle-qa",
+      "type": "prompt",
+      "requires": [
+        "word-timed-srt"
+      ],
+      "prompt": "Check the SRT: timing, line length, brand spelling, correct language/script, RTL for fa/ar. Fix and report.",
+      "gate": "none"
+    },
+    {
+      "id": "burn-in",
+      "type": "prompt",
+      "command": "skills/reel-subtitles/scripts/burn_subtitles.py --preset <brand subtitlePreset>",
+      "prompt": "Burn subtitles with skills/reel-subtitles/scripts/burn_subtitles.py --preset <brand subtitlePreset> (the brand's locked style). Keep the sidecar SRT separate.",
+      "gate": "none"
+    },
+    {
+      "id": "subtitle-review",
+      "type": "prompt",
+      "requires": [
+        "subtitles.srt",
+        "caption.txt"
+      ],
+      "prompt": "Show the captioned video, subtitles.srt and caption.txt for the language and wait for the user's decision. Write a language-specific caption; never copy another language's.",
+      "gate": "approval"
+    }
+  ],
+  "mode": "agent-prompts"
+}

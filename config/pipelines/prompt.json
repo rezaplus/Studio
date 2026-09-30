@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "prompt",
+  "name": "Prompt Pipeline",
+  "kind": "child",
+  "stages": [
+    {
+      "id": "prompt-draft",
+      "type": "prompt",
+      "output": "production/prompt.md",
+      "prompt": "From brief.md write one clear video prompt (or one per shot) in production/prompt.md. Preserve product names, format, length, references and sound requirements. Default 9:16 Instagram Reel.",
+      "gate": "none"
+    },
+    {
+      "id": "prompt-validation",
+      "type": "prompt",
+      "requires": [
+        "production/prompt.md"
+      ],
+      "prompt": "Check production/prompt.md against the brief: length, 9:16, sound direction, required names, no unsupported model fields. List any problems and fix them before asking for approval.",
+      "gate": "none"
+    },
+    {
+      "id": "prompt-approval",
+      "type": "prompt",
+      "prompt": "Show the exact prompt(s) and wait. Mark completed only after the user's explicit yes.",
+      "gate": "approval"
+    }
+  ],
+  "mode": "agent-prompts"
+}

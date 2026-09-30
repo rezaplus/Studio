@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "intake",
+  "name": "Content Intake Pipeline",
+  "kind": "child",
+  "stages": [
+    {
+      "id": "brief",
+      "type": "prompt",
+      "requires": [
+        "brief.md"
+      ],
+      "prompt": "Read content/<content-id>/content.json and brief.md. If the brief lacks any of the 7 intake headings in AGENTS.md (topic, audience/language, format, creative direction, narrative, audio/post, budget), ask the user for the missing ones. Then write the complete brief into brief.md. Do not generate media.",
+      "gate": "none"
+    },
+    {
+      "id": "brand-locale-check",
+      "type": "prompt",
+      "requires": [
+        "content.json",
+        "brand-profile"
+      ],
+      "prompt": "Read config/workspace.json, config/brands/<brand>/ and content.json. Confirm the brand exists, every locale is active, and Arabic is Khaliji/Emirati. Report mismatches; fix only content.json fields the user confirms.",
+      "gate": "none"
+    },
+    {
+      "id": "intake-approval",
+      "type": "prompt",
+      "prompt": "Show the user the finished brief and wait. Mark this stage completed only after their explicit yes.",
+      "gate": "approval"
+    }
+  ],
+  "mode": "agent-prompts"
+}
